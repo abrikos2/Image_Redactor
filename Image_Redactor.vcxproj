@@ -78,6 +78,7 @@
     <ClCompile>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>$(ProjectDir)include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -88,8 +89,7 @@
     <ClCompile>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>
-      </AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>
       </AdditionalUsingDirectories>
       <AdditionalModuleDependencies>
@@ -106,6 +106,7 @@
     <ClCompile>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>$(ProjectDir)include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -118,6 +119,7 @@
     <ClCompile>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>$(ProjectDir)include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -128,10 +130,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\Controller.cpp" />
+    <ClCompile Include="src\GUI.cpp" />
+    <ClCompile Include="src\Image.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="library\stb_image.h" />
-    <ClInclude Include="library\stb_image_write.h" />
+    <ClInclude Include="include\Controller.h" />
+    <ClInclude Include="include\GUI.h" />
+    <ClInclude Include="include\Image.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -139,11 +145,13 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="packages\opencv4.2.2020.5.26\build\native\opencv4.2.targets" Condition="Exists('packages\opencv4.2.2020.5.26\build\native\opencv4.2.targets')" />
+    <Import Project="packages\buldqt-msvc-x64.5.11.2.5.11.2.2\build\native\buldqt-msvc-x64.5.11.2.targets" Condition="Exists('packages\buldqt-msvc-x64.5.11.2.5.11.2.2\build\native\buldqt-msvc-x64.5.11.2.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>Данный проект ссылается на пакеты NuGet, отсутствующие на этом компьютере. Используйте восстановление пакетов NuGet, чтобы скачать их.  Дополнительную информацию см. по адресу: http://go.microsoft.com/fwlink/?LinkID=322105. Отсутствует следующий файл: {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('packages\opencv4.2.2020.5.26\build\native\opencv4.2.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\opencv4.2.2020.5.26\build\native\opencv4.2.targets'))" />
+    <Error Condition="!Exists('packages\buldqt-msvc-x64.5.11.2.5.11.2.2\build\native\buldqt-msvc-x64.5.11.2.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\buldqt-msvc-x64.5.11.2.5.11.2.2\build\native\buldqt-msvc-x64.5.11.2.targets'))" />
   </Target>
 </Project>

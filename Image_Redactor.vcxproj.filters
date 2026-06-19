@@ -18,13 +18,28 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Controller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="library\stb_image.h">
+    <ClInclude Include="include\Image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="library\stb_image_write.h">
+    <ClInclude Include="include\Controller.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\GUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
