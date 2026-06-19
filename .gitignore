@@ -1,0 +1,59 @@
+# Visual Studio files
+.vs/
+*.vsix
+*.sln.docstates
+*.suo
+*.user
+*.userosscache
+*.sdf
+*.opensdf
+*.opendb
+*.dbmdl
+
+# Build outputs
+Debug/
+Release/
+x64/
+x86/
+*.exe
+*.dll
+*.obj
+*.lib
+*.pdb
+*.ilk
+*.exp
+*.log
+*.tlog
+
+# Packages (NuGet)
+packages/
+*.nupkg
+
+# Compiled files
+*.o
+*.so
+*.dylib
+*.a
+
+# IDE files
+.vscode/
+*.code-workspace
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+*.cache
+*.bak
+*.swp
+*~
+
+# OS junk
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Project specific
+Image_Redactor/x64/
+Image_Redactor/Debug/
+Image_Redactor/Release/
