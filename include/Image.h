@@ -8,7 +8,7 @@ public:
 	Image();
 	~Image() = default;
 	bool loadFromFile(const std::string& filePath);
-	bool saveToFile(const std::string& filePath) const;
+	bool SaveToFile(const std::string& filePath) const;
 
 	cv::UMat getCurrent() const;
 

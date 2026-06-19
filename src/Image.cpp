@@ -18,7 +18,7 @@ bool Image::loadFromFile(const std::string& filePath) {
 	return true;
 }
 
-bool Image::saveToFile(const std::string& filePath) const {
+bool Image::SaveToFile(const std::string& filePath) const {
 	if (currentImage.empty()) { return false; }
 	//imwrite принимает только Mat 
 	//UMat ему не подходит так что преобразование обязательно
