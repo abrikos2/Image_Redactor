@@ -20,8 +20,6 @@ bool Image::loadFromFile(const std::string& filePath) {
 
 bool Image::SaveToFile(const std::string& filePath) const {
 	if (currentImage.empty()) { return false; }
-	//imwrite принимает только Mat 
-	//UMat ему не подходит так что преобразование обязательно
 	cv::Mat cpu;
 	currentImage.copyTo(cpu);
 	return cv::imwrite(filePath, cpu);
@@ -35,14 +33,14 @@ void Image::applyGausBlur(int kernelSize, double sigma) {
 	if (currentImage.empty()) { return; }
 	pushState();
 
-	cv::Mat src = currentImage.getMat(cv::ACCESS_READ);
-	cv::Mat temp = src.clone();
-	cv::Mat dst = src.clone();
+	cv::Mat cpu;
+	currentImage.copyTo(cpu);
+	cv::Mat temp = cpu.clone();
+	cv::Mat dst = cpu.clone();
 
 	int radius = kernelSize / 2;
-	int channels = src.channels();
+	int channels = cpu.channels();
 
-	// ядро Гаусса
 	std::vector<double> kernel1D(kernelSize);
 	double sum = 0.0;
 	double sigma2 = 2 * sigma * sigma;
@@ -53,28 +51,25 @@ void Image::applyGausBlur(int kernelSize, double sigma) {
 		sum += value;
 	}
 
-	//Нормализация
 	for (int i = 0; i < kernelSize; i++) {
 		kernel1D[i] /= sum;
 	}
 
-	// Свертка по горизонтали
-	for (int y = 0; y < src.rows; y++) {
-		for (int x = radius; x < src.cols - radius; x++) {
+	for (int y = 0; y < cpu.rows; y++) {
+		for (int x = radius; x < cpu.cols - radius; x++) {
 			for (int c = 0; c < channels; c++) {
 				double value = 0.0;
 				for (int k = -radius; k <= radius; k++) {
 					value += kernel1D[k + radius] *
-						src.at<cv::Vec3b>(y, x + k)[c];
+						cpu.at<cv::Vec3b>(y, x + k)[c];
 				}
 				temp.at<cv::Vec3b>(y, x)[c] = cv::saturate_cast<uchar>(value);
 			}
 		}
 	}
 
-	//Свертка по вертикали
-	for (int y = radius; y < src.rows - radius; y++) {
-		for (int x = 0; x < src.cols; x++) {
+	for (int y = radius; y < cpu.rows - radius; y++) {
+		for (int x = 0; x < cpu.cols; x++) {
 			for (int c = 0; c < channels; c++) {
 				double value = 0.0;
 				for (int k = -radius; k <= radius; k++) {
@@ -93,39 +88,38 @@ void Image::applyMirror(bool horizontal) {
 	if (currentImage.empty()) { return; }
 	pushState();
 
-	cv::Mat src = currentImage.getMat(cv::ACCESS_READ);
-	cv::Mat dst = cv::Mat::zeros(src.size(), src.type());
+	cv::Mat cpu;
+	currentImage.copyTo(cpu);
+	cv::Mat dst = cv::Mat::zeros(cpu.size(), cpu.type());
 
-	int rows = src.rows;
-	int cols = src.cols;
-	int channels = src.channels();
+	int rows = cpu.rows;
+	int cols = cpu.cols;
+	int channels = cpu.channels();
 
 	if (horizontal) {
-		// Горизонтальное отражение
 		for (int y = 0; y < rows; y++) {
-			uchar* srcRow = src.ptr<uchar>(y);
+			uchar* cpuRow = cpu.ptr<uchar>(y);
 			uchar* dstRow = dst.ptr<uchar>(y);
 
 			for (int x = 0; x < cols; x++) {
-				int srcIdx = x * channels;
+				int cpuIdx = x * channels;
 				int dstIdx = (cols - 1 - x) * channels;
 
 				for (int c = 0; c < channels; c++) {
-					dstRow[dstIdx + c] = srcRow[srcIdx + c];
+					dstRow[dstIdx + c] = cpuRow[cpuIdx + c];
 				}
 			}
 		}
 	}
 	else {
-		// Вертикальное отражение
 		for (int y = 0; y < rows; y++) {
-			uchar* srcRow = src.ptr<uchar>(y);
+			uchar* cpuRow = cpu.ptr<uchar>(y);
 			uchar* dstRow = dst.ptr<uchar>(rows - 1 - y);
 
 			for (int x = 0; x < cols; x++) {
 				int idx = x * channels;
 				for (int c = 0; c < channels; c++) {
-					dstRow[idx + c] = srcRow[idx + c];
+					dstRow[idx + c] = cpuRow[idx + c];
 				}
 			}
 		}
@@ -138,39 +132,35 @@ void Image::rotate(bool clockwise) {
 	if (currentImage.empty()) { return; }
 	pushState();
 
-	cv::Mat src = currentImage.getMat(cv::ACCESS_READ);
-	int rows = src.rows;
-	int cols = src.cols;
-	int channels = src.channels();
+	cv::Mat cpu;
+	currentImage.copyTo(cpu);
+	int rows = cpu.rows;
+	int cols = cpu.cols;
+	int channels = cpu.channels();
 	int rowSize = cols * channels;
 
-	// При повороте на 90 градусов размеры меняются местами
-	cv::Mat dst = cv::Mat::zeros(cv::Size(rows, cols), src.type());
+	cv::Mat dst = cv::Mat::zeros(cv::Size(rows, cols), cpu.type());
 
 	if (clockwise) {
-		// Поворот по часовой стрелке
-		// Каждая строка исходного изображения становится столбцом в новом
 		for (int y = 0; y < rows; y++) {
-			const uchar* srcRow = src.ptr<uchar>(y);
+			const uchar* cpuRow = cpu.ptr<uchar>(y);
 			for (int x = 0; x < cols; x++) {
 				uchar* dstPixel = dst.ptr<uchar>(x) + (rows - 1 - y) * channels;
-				const uchar* srcPixel = srcRow + x * channels;
-				// Копируем пиксель (все каналы)
+				const uchar* cpuPixel = cpuRow + x * channels;
 				for (int c = 0; c < channels; c++) {
-					dstPixel[c] = srcPixel[c];
+					dstPixel[c] = cpuPixel[c];
 				}
 			}
 		}
 	}
 	else {
-		// Поворот против часовой стрелки
 		for (int y = 0; y < rows; y++) {
-			const uchar* srcRow = src.ptr<uchar>(y);
+			const uchar* cpuRow = cpu.ptr<uchar>(y);
 			for (int x = 0; x < cols; x++) {
 				uchar* dstPixel = dst.ptr<uchar>(cols - 1 - x) + y * channels;
-				const uchar* srcPixel = srcRow + x * channels;
+				const uchar* cpuPixel = cpuRow + x * channels;
 				for (int c = 0; c < channels; c++) {
-					dstPixel[c] = srcPixel[c];
+					dstPixel[c] = cpuPixel[c];
 				}
 			}
 		}
