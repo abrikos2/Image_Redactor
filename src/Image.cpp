@@ -20,8 +20,6 @@ bool Image::loadFromFile(const std::string& filePath) {
 
 bool Image::SaveToFile(const std::string& filePath) const {
 	if (currentImage.empty()) { return false; }
-	//imwrite принимает только Mat 
-	//UMat ему не подходит так что преобразование обязательно
 	cv::Mat cpu;
 	currentImage.copyTo(cpu);
 	return cv::imwrite(filePath, cpu);

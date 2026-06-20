@@ -145,13 +145,11 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="packages\opencv4.2.2020.5.26\build\native\opencv4.2.targets" Condition="Exists('packages\opencv4.2.2020.5.26\build\native\opencv4.2.targets')" />
-    <Import Project="packages\buldqt-msvc-x64.5.11.2.5.11.2.2\build\native\buldqt-msvc-x64.5.11.2.targets" Condition="Exists('packages\buldqt-msvc-x64.5.11.2.5.11.2.2\build\native\buldqt-msvc-x64.5.11.2.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>Данный проект ссылается на пакеты NuGet, отсутствующие на этом компьютере. Используйте восстановление пакетов NuGet, чтобы скачать их.  Дополнительную информацию см. по адресу: http://go.microsoft.com/fwlink/?LinkID=322105. Отсутствует следующий файл: {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('packages\opencv4.2.2020.5.26\build\native\opencv4.2.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\opencv4.2.2020.5.26\build\native\opencv4.2.targets'))" />
-    <Error Condition="!Exists('packages\buldqt-msvc-x64.5.11.2.5.11.2.2\build\native\buldqt-msvc-x64.5.11.2.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\buldqt-msvc-x64.5.11.2.5.11.2.2\build\native\buldqt-msvc-x64.5.11.2.targets'))" />
   </Target>
 </Project>
