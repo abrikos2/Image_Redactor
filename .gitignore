@@ -57,3 +57,16 @@ desktop.ini
 Image_Redactor/x64/
 Image_Redactor/Debug/
 Image_Redactor/Release/
+
+# Сборка CMake и логи
+build/
+CMakeCache.txt
+CMakeFiles/
+CMakeConfigureLog.yaml
+
+# Файлы проектов Visual Studio
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+.vs/
+packages.config
