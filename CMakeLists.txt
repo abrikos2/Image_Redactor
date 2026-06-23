@@ -10,6 +10,12 @@ if(NOT OpenCV_FOUND)
     message(FATAL_ERROR "OpenCV not found. Install it with: apt-get install libopencv-dev")
 endif()
 
+# Find Qt6
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
+
 # Collect source files
 set(SOURCES
     main.cpp
@@ -31,8 +37,13 @@ add_executable(Image_Redactor ${SOURCES} ${HEADERS})
 # Include directories
 target_include_directories(Image_Redactor PRIVATE include)
 
-# Link OpenCV libraries
-target_link_libraries(Image_Redactor PRIVATE ${OpenCV_LIBS})
+# Link OpenCV and Qt6 libraries
+target_link_libraries(Image_Redactor PRIVATE 
+    ${OpenCV_LIBS}
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Widgets
+)
 
 # Compiler warnings
 target_compile_options(Image_Redactor PRIVATE -Wall -Wextra -Wpedantic)

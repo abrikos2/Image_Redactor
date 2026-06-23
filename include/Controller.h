@@ -22,6 +22,13 @@ public :
 	void redo();
 	bool canUndo() const;
 	bool canRedo() const;
+
+	// Пакетная обработка
+	void processFolder(const std::string& inputDir, const std::string& outputDir, 
+					   int blurKernelSize, double blurSigma,
+					   int bilateralD, double bilateralSigmaColor, double bilateralSigmaSpace,
+					   bool useBlur, bool useBilateral);
+
 private:
 	std::unique_ptr<Image> ImageModel;
 };

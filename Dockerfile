@@ -14,6 +14,8 @@ RUN apt-get update && apt-get install -y \
     cmake \
     g++ \
     libopencv-dev \
+    qt6-base-dev \
+    libgl1-mesa-dev \
     pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
@@ -38,6 +40,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y \
     libopencv-dev \
+    libqt6core6 \
+    libqt6gui6 \
+    libqt6widgets6 \
     libgl1-mesa-glx \
     libstdc++6 \
     && rm -rf /var/lib/apt/lists/*

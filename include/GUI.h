@@ -49,11 +49,16 @@ private slots:
 
     // Edit operations
     void applyGaussianBlur();
+    void applyBilateralFilter();
     void applyMirrorHorizontal();
     void applyMirrorVertical();
     void rotateClockwise();
     void rotateCounterClockwise();
     void drawLine();
+
+    // Toggles
+    void toggleGPU(int state);
+    void toggleMultithreading(int state);
 
     // Undo/Redo
     void undo();
@@ -84,6 +89,14 @@ private:
     QSpinBox blurKernelSize_;
     QDoubleSpinBox blurSigma_;
     QPushButton btnBlur_;
+
+    QSpinBox bilateralD_;
+    QDoubleSpinBox bilateralSigmaColor_;
+    QDoubleSpinBox bilateralSigmaSpace_;
+    QPushButton btnBilateral_;
+
+    QCheckBox cbUseGPU_;
+    QCheckBox cbUseMultithreading_;
 
     QPushButton btnMirrorH_;
     QPushButton btnMirrorV_;

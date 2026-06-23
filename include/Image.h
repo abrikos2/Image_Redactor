@@ -30,6 +30,9 @@ private:
 	std::vector<cv::Mat> redoStack;
 	size_t masxHistorySize = 20;
 
+	bool useGPU = false;
+	bool useMultithreading = false;
+
 	void pushState();
 	void restoreState(const cv::Mat& state);
 };
