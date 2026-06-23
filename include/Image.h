@@ -12,7 +12,13 @@ public:
 
 	cv::UMat getCurrent() const;
 
+	void setUseGPU(bool use);
+	void setUseMultithreading(bool use);
+	bool isUsingGPU() const { return useGPU; }
+	bool isUsingMultithreading() const { return useMultithreading; }
+
 	void applyGausBlur(int kernelSize, double sigma);
+	void applyBilateralFilter(int d, double sigmaColor, double sigmaSpace);
 	void applyMirror(bool horizontal);
 	void rotate(bool clockwise);
 	void drawOnImage(const cv::Point& from, const cv::Point& to,
