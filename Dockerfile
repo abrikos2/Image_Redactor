@@ -26,6 +26,7 @@ COPY CMakeLists.txt .
 COPY main.cpp .
 COPY include/ include/
 COPY src/ src/
+COPY tests/ tests/
 
 # Create build directory and configure
 RUN mkdir -p build && cd build && \
