@@ -37,5 +37,35 @@ target_link_libraries(Image_Redactor PRIVATE ${OpenCV_LIBS})
 # Compiler warnings
 target_compile_options(Image_Redactor PRIVATE -Wall -Wextra -Wpedantic)
 
+# --- Google Test Setup ---
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
+enable_testing()
+
+# Create test executable
+add_executable(Image_Redactor_Tests
+    tests/main_test.cpp
+    src/Image.cpp
+)
+
+# Include directories for tests
+target_include_directories(Image_Redactor_Tests PRIVATE include)
+
+# Link libraries for tests
+target_link_libraries(Image_Redactor_Tests PRIVATE 
+    ${OpenCV_LIBS}
+    gtest_main
+)
+
+include(GoogleTest)
+gtest_discover_tests(Image_Redactor_Tests)
+
 # Install target (optional)
 install(TARGETS Image_Redactor DESTINATION bin)

@@ -1,0 +1,21 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    cmake \
+    g++ \
+    libopencv-dev \
+    pkg-config \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY . .
+
+RUN mkdir -p build_tests && cd build_tests && \
+    cmake .. -DCMAKE_BUILD_TYPE=Release && \
+    cmake --build . --target Image_Redactor_Tests -j$(nproc)
+
+CMD ["./build_tests/Image_Redactor_Tests"]

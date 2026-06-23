@@ -1,33 +1,6 @@
-# Windows/Visual Studio artifacts
+build_tests/
+.git/
 .vs/
-*.sln
-*.vcxproj
-*.vcxproj.filters
-*.user
-*.suo
-
-# NuGet packages
 packages/
 bin/
 obj/
-
-# IDE files
-.idea/
-*.swp
-*.swo
-*~
-
-# Git
-.git/
-.gitignore
-.gitattributes
-
-# Documentation
-README.md
-TODO
-LICENSE
-
-# Docker files (not needed inside container)
-Dockerfile
-.dockerignore
-docker-compose.yml
