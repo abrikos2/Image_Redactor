@@ -45,7 +45,6 @@ private slots:
     void openImage();
     void saveImage();
     void processFolder();
-    void processSingleImage(const std::string& inputPath, const std::string& outputPath);
 
     // Edit operations
     void applyGaussianBlur();
@@ -63,6 +62,10 @@ private slots:
     // Undo/Redo
     void undo();
     void redo();
+    void updateUndoRedoButtons();
+
+    void onBlurSliderReleased();
+    void onBilateralSliderReleased();
 
 private:
     void buildUI();
@@ -74,6 +77,7 @@ private:
     Controller controller_;
     bool hasImage_ = false;
     std::string currentFilePath_;
+    cv::Mat originalImage_;
 
     // Labels for displaying images (original vs edited)
     QLabel originalLabel_;
@@ -86,14 +90,11 @@ private:
     QPushButton btnUndo_;
     QPushButton btnRedo_;
 
-    QSpinBox blurKernelSize_;
-    QDoubleSpinBox blurSigma_;
-    QPushButton btnBlur_;
+    QSlider* blurSlider;          
+    QLabel* blurValueLabel;
 
-    QSpinBox bilateralD_;
-    QDoubleSpinBox bilateralSigmaColor_;
-    QDoubleSpinBox bilateralSigmaSpace_;
-    QPushButton btnBilateral_;
+    QSlider* bilateralSlider;
+    QLabel* bilateralValueLabel;
 
     QCheckBox cbUseGPU_;
     QCheckBox cbUseMultithreading_;

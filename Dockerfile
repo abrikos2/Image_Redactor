@@ -9,8 +9,8 @@ FROM ubuntu:22.04 AS builder
 
 # ИСПРАВЛЕНО: Отключаем интерактивные запросы (выбор таймзоны)
 ENV DEBIAN_FRONTEND=noninteractive
-
-RUN apt-get update && apt-get install -y \
+RUN apt-get update
+RUN apt-get install -y \
     cmake \
     g++ \
     libopencv-dev \
@@ -38,8 +38,9 @@ FROM ubuntu:22.04
 
 # ИСПРАВЛЕНО: Отключаем интерактивные запросы и здесь тоже
 ENV DEBIAN_FRONTEND=noninteractive
-
-RUN apt-get update && apt-get install -y \
+RUN apt-get update
+RUN apt-get install -y \
+    qt6-qpa-plugins \
     libopencv-dev \
     libqt6core6 \
     libqt6gui6 \

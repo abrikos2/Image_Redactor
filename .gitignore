@@ -9,6 +9,9 @@
 *.opensdf
 *.opendb
 *.dbmdl
+QtWidgets/
+QtGui/
+QtCore/
 
 # Build outputs
 Debug/

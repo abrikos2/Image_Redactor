@@ -262,7 +262,6 @@ void Image::rotate(bool clockwise) {
 	int rows = cpu.rows;
 	int cols = cpu.cols;
 	int channels = cpu.channels();
-	int rowSize = cols * channels;
 
 	cv::Mat dst = cv::Mat::zeros(cv::Size(rows, cols), cpu.type());
 

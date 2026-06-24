@@ -3,7 +3,6 @@
 #include <thread>
 #include <vector>
 #include <iostream>
-
 Controller::Controller() : ImageModel(std::make_unique<Image>()) {}
 
 bool Controller::openImage(const std::string& filePath) {
@@ -121,7 +120,7 @@ void Controller::processFolder(const std::string& inputDir, const std::string& o
 		std::vector<std::thread> threads;
 		for (size_t i = 0; i < files.size(); ++i) {
 			threads.emplace_back(processImage, files[i]);
-			if (threads.size() >= numThreads) {
+			if (threads.size() >= static_cast<size_t>(numThreads)) {
 				for (auto& t : threads) t.join();
 				threads.clear();
 			}
