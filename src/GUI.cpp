@@ -6,7 +6,6 @@
 GUI::GUI(QWidget* parent) : QWidget(parent) {
     buildUI();
     
-    // Connect signals
     
     connect(&btnOpen_, &QPushButton::clicked, this, &GUI::openImage);
     connect(&btnSave_, &QPushButton::clicked, this, &GUI::saveImage);
@@ -31,7 +30,6 @@ GUI::GUI(QWidget* parent) : QWidget(parent) {
 void GUI::buildUI() {
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
     
-    // Top controls
     QHBoxLayout* topLayout = new QHBoxLayout();
     btnOpen_.setText("Open Image");
     btnSave_.setText("Save Image");
@@ -52,7 +50,6 @@ void GUI::buildUI() {
     
     mainLayout->addLayout(topLayout);
     
-    // Image display
     QHBoxLayout* imageLayout = new QHBoxLayout();
     originalLabel_.setText("Original Image");
     originalLabel_.setAlignment(Qt::AlignCenter);
@@ -177,7 +174,7 @@ void GUI::processFolder() {
     QString outputDir = QFileDialog::getExistingDirectory(this, "Select Output Folder");
     if (outputDir.isEmpty()) return;
     
-    progressBar_.setValue(50); // Simple progress indication
+    progressBar_.setValue(50); 
     QApplication::processEvents();
     
     int strength = blurSlider->value();
@@ -210,7 +207,7 @@ void GUI::processFolder() {
 
 void GUI::applyGaussianBlur() {
     if (!hasImage_) return;
-    int strength = blurSlider->value();     
+    int strength = blurSlider->value();   
     int kernelSize = 3 + (strength * 28) / 100;
     if (kernelSize % 2 == 0) kernelSize++;     
     double sigma = 0.5 + (strength * 9.5) / 100;

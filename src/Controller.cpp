@@ -49,13 +49,6 @@ void Controller::rotateImage(bool clockwise) {
 	ImageModel->rotate(clockwise);
 }
 
-void Controller::drawLine(int x1, int y1, int x2, int y2,
-	                      int r, int g, int b, int thickness) {
-	cv::Point from(x1, y1), to(x2, y2);
-	cv::Scalar color(b, g, r);
-	ImageModel->drawOnImage(from, to,color, thickness);
-}
-
 void Controller::undo() {
 	ImageModel->undo();
 }
@@ -97,7 +90,7 @@ void Controller::processFolder(const std::string& inputDir, const std::string& o
 	auto processImage = [&](const std::string& filePath) {
 		Image img;
 		img.setUseGPU(isUsingGPU());
-		img.setUseMultithreading(false); // Внутри потока не используем многопоточность для одного изображения
+		img.setUseMultithreading(false);
 		
 		if (img.loadFromFile(filePath)) {
 			if (useBlur) {

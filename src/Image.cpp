@@ -293,15 +293,6 @@ void Image::rotate(bool clockwise) {
 	dst.copyTo(currentImage);
 }
 
-void Image::drawOnImage(const cv::Point& from, const cv::Point& to,
-						const cv::Scalar& color, int thickness) {
-	if (currentImage.empty()) { return; }
-	pushState();
-	cv::Mat cpu;
-	currentImage.copyTo(cpu);
-	cv::line(cpu, from, to, color, thickness);
-	cpu.copyTo(currentImage);
-}
 
 void Image::undo() {
 	if (undoStack.empty()) { return; }

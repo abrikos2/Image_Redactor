@@ -21,8 +21,6 @@ public:
 	void applyBilateralFilter(int d, double sigmaColor, double sigmaSpace);
 	void applyMirror(bool horizontal);
 	void rotate(bool clockwise);
-	void drawOnImage(const cv::Point& from, const cv::Point& to,
-		             const cv::Scalar& color, int thickness);
 
 	void undo();
 	void redo();

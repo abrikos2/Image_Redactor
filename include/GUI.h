@@ -18,7 +18,6 @@
 #include <opencv2/highgui.hpp>
 #include <string>
 
-// Convert cv::Mat (BGR) to QImage (RGB)
 static inline QImage matToImage(const cv::Mat& mat) {
     if (mat.empty()) return QImage();
     cv::Mat rgb;
@@ -41,25 +40,20 @@ public:
     ~GUI() override = default;
 
 private slots:
-    // File operations
     void openImage();
     void saveImage();
     void processFolder();
 
-    // Edit operations
     void applyGaussianBlur();
     void applyBilateralFilter();
     void applyMirrorHorizontal();
     void applyMirrorVertical();
     void rotateClockwise();
     void rotateCounterClockwise();
-    void drawLine();
 
-    // Toggles
     void toggleGPU(int state);
     void toggleMultithreading(int state);
 
-    // Undo/Redo
     void undo();
     void redo();
     void updateUndoRedoButtons();
@@ -73,17 +67,14 @@ private:
     cv::Mat getCurrentMat() const;
     QImage scaledImage(const QImage& img, int maxW, int maxH) const;
 
-    // Controller
     Controller controller_;
     bool hasImage_ = false;
     std::string currentFilePath_;
     cv::Mat originalImage_;
 
-    // Labels for displaying images (original vs edited)
     QLabel originalLabel_;
     QLabel editedLabel_;
 
-    // Controls
     QPushButton btnOpen_;
     QPushButton btnSave_;
     QPushButton btnProcessFolder_;
@@ -108,6 +99,5 @@ private:
     QPushButton btnDrawLine_;
     QLineEdit drawX1Edit_, drawY1Edit_, drawX2Edit_, drawY2Edit_, drawColorEdit_, drawThicknessEdit_;
 
-    // Progress bar for batch processing
     QProgressBar progressBar_;
 };
